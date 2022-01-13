@@ -122,10 +122,10 @@ export class CisionFeedItem {
 }
 
 export interface CisionPressReleaseResponse {
-  Release: CisionFeedItemResponse;
-  DatePackaged: string;
-  Title: string;
-  Author: string;
+  Release: CisionFeedItemResponse
+  DatePackaged: string
+  Title: string
+  Author: string
 }
 
 export default {

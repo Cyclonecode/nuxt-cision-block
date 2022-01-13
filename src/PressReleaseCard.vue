@@ -2,8 +2,7 @@
   <section class="cision-feed-item">
     <h1>{{ item.title }}</h1>
     <time>{{ item.date }}</time>
-    <span
-      v-if="markRelease">
+    <span v-if="markRelease">
       {{ releaseText }}
     </span>
     <div v-if="showMedia && item.image" class="cision-feed-item-media">
@@ -11,9 +10,7 @@
     </div>
     <p class="intro" v-if="showIntro">{{ item.intro }}</p>
     <p v-if="showBody">{{ item.body }}</p>
-    <nuxt-link
-      :to="link"
-      >
+    <nuxt-link :to="link">
       {{ linkText }}
     </nuxt-link>
   </section>
@@ -57,7 +54,7 @@ export default {
     linkText: {
       type: String,
       default: 'Read more',
-    }
+    },
   },
   mounted() {
     // console.log(this.$parent.list)
@@ -67,8 +64,10 @@ export default {
       return `${this.$cision.options?.basePath + '/' + this.item.encryptedId}`
     },
     releaseText() {
-      return this.item.isRegulatory ? this.regulatoryText : this.nonRegulatoryText
-    }
+      return this.item.isRegulatory
+        ? this.regulatoryText
+        : this.nonRegulatoryText
+    },
   },
 }
 </script>

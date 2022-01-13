@@ -59,12 +59,6 @@ export default {
   components: {
     PressReleaseCard,
   },
-  props: {
-    group: {
-      type: String,
-      default: '',
-    },
-  },
   data() {
     return {
       id: 'cb',
@@ -110,7 +104,7 @@ export default {
           this.itemsPerPage
       )
       if (this.list.length === 0) {
-        this.pages = 0;
+        this.pages = 0
       }
       this.page = this.feed.index
       console.log(

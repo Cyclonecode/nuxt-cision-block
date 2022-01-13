@@ -39,6 +39,7 @@ const Cision: any = {
     Vue.component(args.componentName || 'PressFeed', PressFeed)
 
     const cision = {
+      options: {},
       fetch: (id: string): Promise<CisionFeedItem> => {
         const key = md5(
           JSON.stringify({
@@ -134,12 +135,11 @@ const Cision: any = {
       },
     }
 
-    const name = args.name || 'cision'
-    // @ts-ignore
     cision.options = {
       ...args,
     }
 
+    const name = args.name || 'cision'
     Vue.prototype['$' + name] = cision
     Vue[name] = cision
   },

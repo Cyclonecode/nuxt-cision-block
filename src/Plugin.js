@@ -1,9 +1,7 @@
-// @ts-nocheck - may need to be at the start of file
 import Vue from 'vue'
 import Cision from './cision'
 
-// @ts-ignore
 Vue.use(Cision, {
-    // @ts-ignore
+    // TODO: Figure out why this not work with typescript
     ...<%= JSON.stringify(options, null, 2) %>
 });

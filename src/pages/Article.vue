@@ -1,7 +1,5 @@
 <template>
-  <div
-      v-if="item"
-  >
+  <div v-if="item">
     {{ item.title }}
   </div>
 </template>
@@ -12,17 +10,17 @@ export default {
     id: {
       type: String,
       required: false,
-    }
+    },
   },
-  data () {
+  data() {
     return {
-      item: {}
+      item: {},
     }
   },
   async fetch() {
     console.log('fetching', this.$route.params.id)
-    this.item = (await this.$cision.fetch(this.$route.params.id))
+    this.item = await this.$cision.fetch(this.$route.params.id)
     console.log(this.item)
-  }
+  },
 }
 </script>
