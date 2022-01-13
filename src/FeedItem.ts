@@ -124,17 +124,17 @@ export class CisionFeedItem {
     this.categories = (rawItem.Categories || []).map((it: CisionCategoryResponse) =>
       it.Name.toLowerCase()
     )
-    this.keywords = rawItem.Keywords || []
-    this.languageCode = rawItem.LanguageCode
-    this.countryCode = rawItem.CountryCode
-    this.type = rawItem.InformationType
+    this.keywords = (rawItem.Keywords || []).map(it => it.toLowerCase())
+    this.languageCode = rawItem.LanguageCode.toLowerCase()
+    this.countryCode = rawItem.CountryCode.toLowerCase()
+    this.type = rawItem.InformationType.toUpperCase()
     this.isRegulatory = rawItem.IsRegulatory
     this.encryptedId = rawItem.EncryptedId
     this.id = rawItem.Id
   }
   hasCategory(categories: string[]): boolean {
     for (const category of categories) {
-      if (this.categories.includes(category)) {
+      if (this.categories.includes(category.toLowerCase())) {
         return true
       }
     }

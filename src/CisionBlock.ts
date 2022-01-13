@@ -98,7 +98,7 @@ const CisionBlock: any = {
             if (options.itemType?.length) {
               response.data.Releases = response.data.Releases.filter(
                 (it: CisionFeedItemResponse) =>
-                  (options.itemType || []).includes(it.InformationType)
+                  (options.itemType || []).map(it => it.toUpperCase()).includes(it.InformationType.toUpperCase())
               )
             }
             // Filter on language code
@@ -122,7 +122,7 @@ const CisionBlock: any = {
                   for (const catName of options.categories || []) {
                     if (
                       it.Categories.find(
-                        (category) => category.Name === catName
+                        (category) => category.Name.toLowerCase() === catName.toLowerCase()
                       )
                     ) {
                       return true
