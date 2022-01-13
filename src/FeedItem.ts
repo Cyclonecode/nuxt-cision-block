@@ -28,6 +28,10 @@ export interface CisionQuoteResponse {
   Author: string
   Text: string
 }
+export interface CisionLanguageVersionResponse {
+  Code: string;
+  ReleaseId: string;
+}
 export interface CisionFeedItemResponse {
   SyndicatedUrl: string
   CompanyInformation: string
@@ -39,7 +43,7 @@ export interface CisionFeedItemResponse {
   EncryptedId: string
   LanguageCode: string
   CountryCode: string
-  LanguageVersions: []
+  LanguageVersions: CisionLanguageVersionResponse[]
   Categories: CisionCategoryResponse[]
   Keywords: string[]
   Images: CisionImageResponse[]
