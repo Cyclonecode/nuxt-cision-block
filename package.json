@@ -1,7 +1,10 @@
 {
   "name": "nuxt-cision-block-module",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cision Block module for nuxt",
+  "engines": {
+    "node": ">=16.13"
+  },
   "main": "lib/index",
   "typings": [
     "lib/index"
@@ -18,19 +21,26 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.vue\"",
     "lint": "tslint -p tsconfig.json"
   },
-  "author": "",
+  "author": "Krister Andersson <cyclonecode@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cyclonecode/nuxt-cision-block-module.git"
+  },
+
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^17.0.8",
     "axios": "^0.24.0",
     "lru-cache": "^6.0.0",
-    "md5": "^2.3.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.4"
+    "md5": "^2.3.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/jest": "^27.4.0",
+    "@types/lru-cache": "^5.1.1",
     "@types/md5": "^2.3.1",
+    "@types/node": "^17.0.8",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4",
     "vue": "^2.6.14"
   }
 }
