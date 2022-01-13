@@ -10,7 +10,7 @@
     "removeComments": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "noEmit": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
