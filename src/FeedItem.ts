@@ -1,4 +1,4 @@
-export interface CisionMedia {
+export interface CisionMediaResponse {
   CreatedDate: string
   FileName: string
   Title: string
@@ -7,10 +7,10 @@ export interface CisionMedia {
   MediaType: string
   Keywords: []
 }
-export interface CisionFile extends CisionMedia {
+export interface CisionFileResponse extends CisionMediaResponse {
   Url: string
 }
-export interface CisionImage extends CisionMedia {
+export interface CisionImageResponse extends CisionMediaResponse {
   DownloadUrl: string
   Photographer: string
   UrlTo100x100ArResized: string
@@ -20,11 +20,11 @@ export interface CisionImage extends CisionMedia {
   UrlTo400x400ArResized: string
   UrlTo800x800ArResized: string
 }
-export interface CisionCategory {
+export interface CisionCategoryResponse {
   Code: string
   Name: string
 }
-export interface CisionQuote {
+export interface CisionQuoteResponse {
   Author: string
   Text: string
 }
@@ -40,9 +40,9 @@ export interface CisionFeedItemResponse {
   LanguageCode: string
   CountryCode: string
   LanguageVersions: []
-  Categories: CisionCategory[]
+  Categories: CisionCategoryResponse[]
   Keywords: string[]
-  Images: CisionImage[]
+  Images: CisionImageResponse[]
   InformationType: string
   PublishDate: string
   LastChangeDate: string
@@ -56,8 +56,8 @@ export interface CisionFeedItemResponse {
   EmbeddedItems: []
   ExternalLinks: []
   QuickFacts: []
-  Quotes: CisionQuote[]
-  Files: CisionFile[]
+  Quotes: CisionQuoteResponse[]
+  Files: CisionFileResponse[]
   Header: string
   HtmlTitle: string
   HtmlIntro: string
@@ -83,6 +83,14 @@ export class CisionFeedItem {
   intro: string
   htmlIntro: string
   image: string
+  files: {
+    url: string,
+    fileName: string,
+    title: string,
+    description: string,
+    isMain: boolean,
+    type: string,
+  }[]
   date: string
   categories: string[]
   keywords: string[]
@@ -100,8 +108,16 @@ export class CisionFeedItem {
     this.intro = rawItem.Intro
     this.htmlIntro = rawItem.HtmlIntro
     this.image = rawItem.Images?.[0]?.DownloadUrl
+    this.files = (rawItem.Files || []).map((it: CisionFileResponse) => ({
+      url: it.Url,
+      fileName: it.FileName,
+      title: it.Title,
+      description: it.Description,
+      isMain: it.IsMain,
+      type: it.MediaType,
+    }))
     this.date = new Date(rawItem.PublishDate).toDateString()
-    this.categories = (rawItem.Categories || []).map((it: any) =>
+    this.categories = (rawItem.Categories || []).map((it: CisionCategoryResponse) =>
       it.Name.toLowerCase()
     )
     this.keywords = rawItem.Keywords || []

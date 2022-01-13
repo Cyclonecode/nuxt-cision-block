@@ -3,6 +3,14 @@
     <h1>{{ release.title }}</h1>
     <div v-html="release.htmlIntro" />
     <div v-html="release.htmlBody" />
+    <div v-if="files.length" class="cision-block-files">
+      <a
+        v-for="(file, index) in files"
+        :href="file.url"
+        :key="'file-' + index"
+        >{{ file.title }}</a
+      >
+    </div>
   </div>
 </template>
 <script>
@@ -22,6 +30,11 @@ export default {
     return {
       release: {},
     }
+  },
+  computed: {
+    files() {
+      return this.release.files || []
+    },
   },
   async fetch() {
     if (this.item) {
