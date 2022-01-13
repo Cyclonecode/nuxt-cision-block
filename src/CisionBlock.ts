@@ -73,7 +73,7 @@ const CisionBlock: any = {
         if (data) {
           return data
         }
-        const displayMode = parseInt(options.displayMode || '0')
+        const displayMode = parseInt(options.displayMode || '0', 10)
         return this.client
           .get(`NewsFeed/${options.id}`, {
             params: {
