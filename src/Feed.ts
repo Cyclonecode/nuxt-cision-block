@@ -43,8 +43,8 @@ export class CisionFeed {
   }
 }
 
-type LanguageCode = string
-type CountryCode = string
+export type LanguageCode = string
+export type CountryCode = string
 
 export interface FeedOptions {
   id?: string

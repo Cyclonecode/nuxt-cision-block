@@ -1,3 +1,5 @@
+import { CountryCode, LanguageCode } from './Feed'
+
 export interface CisionMediaResponse {
   CreatedDate: string
   FileName: string
@@ -32,6 +34,25 @@ export interface CisionLanguageVersionResponse {
   Code: string;
   ReleaseId: string;
 }
+export interface CisionServiceCategoryResponse {
+  ServiceName: string;
+  Name: string;
+  Value: string;
+}
+export interface CisionTickerResponse {
+  Symbol: string;
+  ISIN: string;
+  PrimaryListing: boolean;
+  IsShare: boolean;
+  MarketPlaceSymbol: string;
+  MarketPlaceName: string;
+  MarketPlaceIsRegulated: boolean;
+  MarketPlaceCountryCode: CountryCode;
+}
+export interface CisionExternalLinkResponse {
+  Title: string;
+  Url: string;
+}
 export interface CisionFeedItemResponse {
   SyndicatedUrl: string
   CompanyInformation: string
@@ -41,8 +62,8 @@ export interface CisionFeedItemResponse {
   Id: number
   IptcCode: string
   EncryptedId: string
-  LanguageCode: string
-  CountryCode: string
+  LanguageCode: LanguageCode
+  CountryCode: CountryCode
   LanguageVersions: CisionLanguageVersionResponse[]
   Categories: CisionCategoryResponse[]
   Keywords: string[]
@@ -58,8 +79,8 @@ export interface CisionFeedItemResponse {
   Complete: string
   Contact: string
   EmbeddedItems: []
-  ExternalLinks: []
-  QuickFacts: []
+  ExternalLinks: CisionExternalLinkResponse[]
+  QuickFacts: string[]
   Quotes: CisionQuoteResponse[]
   Files: CisionFileResponse[]
   Header: string
@@ -71,13 +92,13 @@ export interface CisionFeedItemResponse {
   SocialMediaPitch: string
   HtmlContact: string
   RawHtmlUrl: string
-  ServiceCategories: []
+  ServiceCategories: CisionServiceCategoryResponse[]
   SourceId: number
   SourceIsListed: boolean
   SourceName: string
   SuppressImageOnCisionWire: boolean
   Videos: []
-  Tickers: []
+  Tickers: CisionTickerResponse[]
 }
 
 export class CisionFeedItem {
@@ -98,8 +119,8 @@ export class CisionFeedItem {
   date: string
   categories: string[]
   keywords: string[]
-  languageCode: string
-  countryCode: string
+  languageCode: LanguageCode
+  countryCode: CountryCode
   type: string
   isRegulatory: boolean
   encryptedId: string
