@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    // "emitDeclarationOnly": true,
+    "outDir": "./lib",
+    "strict": true,
+    "isolatedModules": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "noEmit": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "noImplicitThis": true,
+    "types": [
+      "@types/node",
+      "@types/jest"
+    ]
+  },
+  "include": ["src/**/*.ts",  "src/**/*.vue"],
+  "exclude": ["node_modules", "**/__tests__/*", "/lib"]
+}
