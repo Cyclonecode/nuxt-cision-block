@@ -9,12 +9,7 @@ import {
 import { CisionFeed, CisionFeedResponse, FeedOptions } from './Feed'
 import PressFeed from './PressFeed.vue'
 
-const cache = new LRUCache({
-  maxAge: 60000,
-  // max: 1000,
-})
-
-const Cision: any = {
+const CisionBlock: any = {
   data() {
     return {
       installed: false,
@@ -24,16 +19,15 @@ const Cision: any = {
     if (this.installed) {
       return
     }
-    this.id = args.id
-    if (!this.id) {
-      // How do we handle this
-    }
     this.installed = true
-    this.useCache = args.useCache || false
-    this.params = args
+
     this.client = axios.create({
       baseURL: 'https://publish.ne.cision.com/papi/',
       timeout: args.timeout || 10000,
+    })
+    this.cache = new LRUCache({
+      maxAge: 60000,
+      // max: 1000,
     })
 
     Vue.component(args.componentName || 'PressFeed', PressFeed)
@@ -46,47 +40,68 @@ const Cision: any = {
             id,
           })
         )
-        let data = this.useCache ? cache.get(key) : null
+        let data = this.options.useCache ? this.cache.get(key) : null
         if (data) {
-          console.log('returned from cache')
           return data
         }
         return this.client
           .get(`Release/${id}`)
           .then((response: { data: CisionPressReleaseResponse }) => {
             data = new CisionFeedItem(response.data.Release)
-            if (this.useCache) {
-              cache.set(key, data)
+            if (this.options.useCache) {
+              this.cache.set(key, data)
             }
             return data
           })
           .catch((error: any) => {
-            console.log('failed to fetch article %s', id)
+            console.log('Failed to fetch article %s', id, error)
           })
       },
       fetchFeed: (options: FeedOptions): Promise<CisionFeed> => {
+        options = Object.assign(
+          {},
+          this.options,
+          JSON.parse(JSON.stringify(options))
+        )
         const key = md5(
           JSON.stringify({
             id: this.id,
             ...options,
           })
         )
-        let data = this.useCache ? cache.get(key) : null
+        let data = options.useCache ? this.cache.get(key) : null
         if (data) {
-          console.log('returned from cache')
           return data
         }
+        const displayMode = parseInt(options.displayMode || '0')
         return this.client
-          .get(`NewsFeed/${this.id}`, {
+          .get(`NewsFeed/${options.id}`, {
             params: {
               DetailLevel: 'detail',
               PageIndex: options.index || 1,
-              PageSize: options.count || 50,
+              PageSize: options.itemCount || 50,
               Format: 'json',
-              Regulatory: options.regulatory || null,
+              Regulatory:
+                displayMode === 2
+                  ? true
+                  : displayMode === 3
+                  ? false
+                  : undefined,
+              Tags: options.keywords?.join(','),
+              StartDate: options.startDate,
+              EndDate: options.endDate,
+              SearchTerm: undefined,
             },
           })
           .then((response: { data: CisionFeedResponse }) => {
+            // Filter on information type
+            if (options.itemType?.length) {
+              response.data.Releases = response.data.Releases.filter(
+                (it: CisionFeedItemResponse) =>
+                  (options.itemType || []).includes(it.InformationType)
+              )
+            }
+            // Filter on language code
             if (!!options.language) {
               response.data.Releases = response.data.Releases.filter(
                 (it: CisionFeedItemResponse) =>
@@ -94,12 +109,14 @@ const Cision: any = {
                   options.language?.toUpperCase()
               )
             }
-            if (!!options.hasImage) {
+            // Filter out items without image
+            if (!!options.mustHaveImage) {
               response.data.Releases = response.data.Releases.filter(
                 (it: CisionFeedItemResponse) => it.Images.length
               )
             }
-            if (!!options.categories) {
+            // Filter on category
+            if (!!options.categories?.length) {
               response.data.Releases = response.data.Releases.filter(
                 (it: CisionFeedItemResponse) => {
                   for (const catName of options.categories || []) {
@@ -114,20 +131,14 @@ const Cision: any = {
                 }
               )
             }
-            console.log(
-              'PageSize: %s, PageIndex: %s, TotalItems: %s',
-              response.data.PageSize,
-              response.data.PageIndex,
-              response.data.TotalFoundReleases
-            )
             data = new CisionFeed(response.data)
-            if (this.useCache) {
-              cache.set(key, data)
+            if (options.useCache) {
+              this.cache.set(key, data)
             }
             return data
           })
           .catch((error: any) => {
-            console.log(error)
+            console.log('Failed to fetch feed', error)
             return {
               items: [],
             }
@@ -135,6 +146,10 @@ const Cision: any = {
       },
     }
 
+    // TODO: Can they share the same options
+    this.options = {
+      ...args,
+    }
     cision.options = {
       ...args,
     }
@@ -145,4 +160,4 @@ const Cision: any = {
   },
 }
 
-export default Cision
+export default CisionBlock

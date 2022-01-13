@@ -1,6 +1,8 @@
 <template>
-  <div v-if="item">
-    {{ item.title }}
+  <div v-if="release">
+    <h1>{{ release.title }}</h1>
+    <div v-html="release.htmlIntro" />
+    <div v-html="release.htmlBody" />
   </div>
 </template>
 <script>
@@ -11,16 +13,22 @@ export default {
       type: String,
       required: false,
     },
+    item: {
+      type: Object,
+      required: false,
+    },
   },
   data() {
     return {
-      item: {},
+      release: {},
     }
   },
   async fetch() {
-    console.log('fetching', this.$route.params.id)
-    this.item = await this.$cision.fetch(this.$route.params.id)
-    console.log(this.item)
+    if (this.item) {
+      this.release = this.item
+      return
+    }
+    this.release = await this.$cision.fetch(this.id || this.$route.params.id)
   },
 }
 </script>

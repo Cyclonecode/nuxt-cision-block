@@ -15,7 +15,6 @@ export interface CisionFeedResponse {
 }
 
 export class CisionFeed {
-  // languageCode: string;
   items: CisionFeedItem[]
   index: number
   itemsPerPage: number
@@ -48,13 +47,19 @@ type LanguageCode = string
 type CountryCode = string
 
 export interface FeedOptions {
+  id?: string
   index?: number
-  count?: number
+  itemCount?: number
+  itemsPerPage?: number
+  itemType?: string[]
+  startDate?: string
+  endDate?: string
+  displayMode?: string
   language?: LanguageCode
-  regulatory?: boolean
   categories?: string[]
   keywords?: string[]
-  hasImage?: boolean
+  mustHaveImage?: boolean
+  useCache?: boolean
 }
 
 export default {

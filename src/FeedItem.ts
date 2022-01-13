@@ -79,7 +79,9 @@ export interface CisionFeedItemResponse {
 export class CisionFeedItem {
   title: string
   body: string
+  htmlBody: string
   intro: string
+  htmlIntro: string
   image: string
   date: string
   categories: string[]
@@ -94,7 +96,9 @@ export class CisionFeedItem {
   constructor(rawItem: CisionFeedItemResponse) {
     this.title = rawItem.Title
     this.body = rawItem.Body
+    this.htmlBody = rawItem.HtmlBody
     this.intro = rawItem.Intro
+    this.htmlIntro = rawItem.HtmlIntro
     this.image = rawItem.Images?.[0]?.DownloadUrl
     this.date = new Date(rawItem.PublishDate).toDateString()
     this.categories = (rawItem.Categories || []).map((it: any) =>

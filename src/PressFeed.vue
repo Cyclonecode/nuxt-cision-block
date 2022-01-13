@@ -1,50 +1,19 @@
 <template>
   <div id="wrapper" class="cision-feed-wrapper">
-    <div id="controls">
-      <label>
-        Images
-        <input
-          v-model="showImages"
-          type="checkbox"
-          v-on:change="fetchFeed()"
-        /><br />
-        Intro
-        <input
-          v-model="showIntro"
-          type="checkbox"
-          v-on:change="fetchFeed()"
-        /><br />
-        Body
-        <input
-          v-model="showBody"
-          type="checkbox"
-          v-on:change="fetchFeed()"
-        /><br />
-        Regulatory
-        <input v-model="regulatory" type="checkbox" v-on:change="fetchFeed()" />
-        ItemsPerPage
-        <input
-          v-model="itemsPerPage"
-          type="number"
-          min="0"
-          max="100"
-          v-on:change="fetchFeed()"
-        />
-      </label>
-      {{ showImages }} {{ regulatory }} {{ itemsPerPage }}
-    </div>
     <PressReleaseCard
-      v-for="(item, index) in list"
+      v-for="(item, index) in items"
       :key="'press-item-' + index"
-      :show-media="showImages"
+      :show-media="showImage"
       :show-intro="showIntro"
       :show-body="showBody"
+      :mark-item="markItem"
+      :regulatory-text="regulatoryText"
+      :non-regulatory-text="nonRegulatoryText"
       :item="item"
-    >
-    </PressReleaseCard>
+    />
     <ul id="pager" class="cision-feed-pager">
-      <li v-for="index in pages" :key="'page-' + index">
-        <nuxt-link :to="{ query: { cbid: id, page: index } }">
+      <li v-for="index in numPages" :key="'page-' + index">
+        <nuxt-link :to="{ query: { page: index - 1 } }">
           {{ index }}
         </nuxt-link>
       </li>
@@ -59,22 +28,106 @@ export default {
   components: {
     PressReleaseCard,
   },
+  props: {
+    id: {
+      type: String,
+      default: undefined,
+    },
+    languageCode: {
+      type: String,
+      required: false,
+    },
+    mustHaveImage: {
+      type: Boolean,
+      default: false,
+    },
+    showImage: {
+      type: Boolean,
+      default: false,
+    },
+    showIntro: {
+      type: Boolean,
+      default: true,
+    },
+    showBody: {
+      type: Boolean,
+      default: true,
+    },
+    itemType: {
+      type: Array,
+      default: () => ['KMK', 'RDV', 'PRM', 'RPT', 'INB', 'NBR'],
+    },
+    startDate: {
+      type: String,
+      default: undefined,
+    },
+    endDate: {
+      type: String,
+      default: undefined,
+    },
+    useCache: {
+      type: Boolean,
+      default: true,
+    },
+    itemCount: {
+      type: Number,
+      default: 50,
+    },
+    itemsPerPage: {
+      type: Number,
+      default: 0,
+    },
+    categories: {
+      type: Array,
+      default: () => [],
+    },
+    keywords: {
+      type: Array,
+      default: () => [],
+    },
+    markItem: {
+      type: Boolean,
+      default: false,
+    },
+    regulatoryText: {
+      type: String,
+      default: undefined,
+    },
+    nonRegulatoryText: {
+      type: String,
+      default: undefined,
+    },
+    displayMode: {
+      type: Number,
+      default: 1,
+    },
+  },
   data() {
     return {
-      id: 'cb',
-      feed: {},
-      list: [],
-      pages: 0,
+      releases: [],
       page: 0,
-      itemsPerPage: 5,
-      //
-      showImages: false,
-      showIntro: true,
-      showBody: true,
-      regulatory: true,
     }
   },
-  computed: {},
+  computed: {
+    numPages() {
+      if (this.itemsPerPage > 0) {
+        const max = Math.ceil(this.releases.length / this.itemsPerPage)
+        return max || 1
+      } else {
+        return 1
+      }
+    },
+    items() {
+      if (this.itemsPerPage > 0) {
+        return this.releases.slice(
+          this.page * this.itemsPerPage,
+          this.page * this.itemsPerPage + this.itemsPerPage
+        )
+      } else {
+        return this.releases
+      }
+    },
+  },
   watch: {
     $route(to, from) {
       this.fetchFeed()
@@ -85,36 +138,24 @@ export default {
   },
   methods: {
     async fetchFeed() {
-      this.feed = await this.$cision.fetchFeed({
-        hasImage: this.hasImage,
-        regulatory: this.regulatory,
-        index: this.$route.query.page || 0,
-        count: this.itemsPerPage,
-        language: 'sv',
-        // categories: ['Regular pressreleases'],
-      })
-      const max = 20
-      this.list = this.feed.items
-      // this.itemsPerPage = this.feed.itemsPerPage
-      // We could actually use totalItems to go through the entire feed
-      // but we also need 'max' I think, in cases where we only would like to
-      // paginate the first 50 or so releases
-      this.pages = Math.ceil(
-        (max ? Math.min(max, this.feed.totalItems) : this.feed.totalItems) /
-          this.itemsPerPage
-      )
-      if (this.list.length === 0) {
-        this.pages = 0
-      }
-      this.page = this.feed.index
-      console.log(
-        `${process.server ? 'serverside' : 'clientside'}`,
-        this.$route.query,
-        this.list.length,
-        this.pages,
-        this.page,
-        this.feed.items.length
-      )
+      this.releases = (
+        await this.$cision.fetchFeed({
+          id: this.id,
+          mustHaveImage: this.mustHaveImage,
+          displayMode: this.displayMode,
+          itemsPerPage: this.itemsPerPage,
+          itemCount: this.itemCount,
+          itemType: this.itemType,
+          startDate: this.startDate,
+          endDate: this.endDate,
+          language: this.languageCode,
+          categories: this.categories,
+          keywords: this.keywords,
+          useCache: this.useCache,
+        })
+      )?.items
+
+      this.page = this.$route.query.page || 0
     },
   },
 }

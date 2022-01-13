@@ -2,7 +2,7 @@
   <section class="cision-feed-item">
     <h1>{{ item.title }}</h1>
     <time>{{ item.date }}</time>
-    <span v-if="markRelease">
+    <span v-if="markItem">
       {{ releaseText }}
     </span>
     <div v-if="showMedia && item.image" class="cision-feed-item-media">
@@ -36,11 +36,10 @@ export default {
       type: Boolean,
       default: true,
     },
-    markRelease: {
+    markItem: {
       type: Boolean,
-      default: true,
+      default: false,
     },
-    // We could keep these in parents only?
     regulatoryText: {
       type: String,
       required: false,
@@ -55,9 +54,6 @@ export default {
       type: String,
       default: 'Read more',
     },
-  },
-  mounted() {
-    // console.log(this.$parent.list)
   },
   computed: {
     link() {
