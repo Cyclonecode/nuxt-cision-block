@@ -1,11 +1,15 @@
 {
-  "name": "nuxt-cision-block-module",
+  "name": "nuxt-cision-block",
   "version": "1.0.0",
   "description": "Cision Block module for nuxt",
   "engines": {
     "node": ">=16.13"
   },
   "main": "lib/index",
+  "files": [
+    "lib",
+    "README.md"
+  ],
   "typings": [
     "lib/index"
   ],
