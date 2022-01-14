@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import CisionBlock from './CisionBlock'
+import Options from './Options'
 
-const options = JSON.parse('<%= JSON.stringify(options) %>')
+const options: Options = JSON.parse('<%= JSON.stringify(options) %>')
 
 Vue.use(CisionBlock, {
     ...options,

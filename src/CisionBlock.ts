@@ -8,7 +8,8 @@ import {
 } from './FeedItem'
 import { CisionFeed, CisionFeedResponse, FeedOptions } from './Feed'
 import PressFeed from './PressFeed.vue'
-const meta = require('./package.json')
+import DisplayMode from './DisplayMode'
+// const meta = require('./package.json')
 
 const CisionBlock: any = {
   data() {
@@ -33,8 +34,8 @@ const CisionBlock: any = {
     })
 
     this.cache = new LRUCache({
-      maxAge: 60000,
-      // max: 1000,
+      max: args.cacheMax || 0, // 1000
+      maxAge: !args.useCache ? -1 : parseInt(args.cacheMaxAge || (1000 * 60 * 15), 10),
     })
 
     Vue.component(args.componentName || 'PressFeed', PressFeed)
@@ -89,9 +90,9 @@ const CisionBlock: any = {
               PageSize: options.itemCount || 50,
               Format: 'json',
               Regulatory:
-                displayMode === 2
+                displayMode === DisplayMode.DISPLAY_REGULATORY
                   ? true
-                  : displayMode === 3
+                  : displayMode === DisplayMode.DISPLAY_NON_REGULATORY
                   ? false
                   : undefined,
               Tags: options.keywords?.join(','),
@@ -153,7 +154,6 @@ const CisionBlock: any = {
       },
     }
 
-    // TODO: Can they share the same options
     this.options = {
       ...args,
     }

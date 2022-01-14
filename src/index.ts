@@ -1,7 +1,8 @@
 import path from 'path'
+import Options from './Options'
 
-export default function (this: any, moduleOptions: any) {
-  const defaultOptions = {
+export default function (this: any, moduleOptions: Options) {
+  const defaultOptions: Options = {
     showImage: false,
     mustHaveImage: false,
     showIntro: true,
@@ -10,16 +11,12 @@ export default function (this: any, moduleOptions: any) {
     articleShowIntro: true,
     articleShowBody: true,
     articleShowFiles: true,
-    // showFilters: false,
-    // filterRegulatoryText: '',
-    // filterNonRegulatoryText: '',
-    // filterAllText: '',
-    // imageStyle: 'DownloadUrl',
     itemType: ['KMK', 'RDV', 'PRM', 'RPT', 'INB', 'NBR'],
     startDate: undefined,
     endDate: undefined,
     useCache: true,
-    cacheMax: 60,
+    cacheMax: 1000,
+    cacheMaxAge: 60 * 15 * 1000,
     basePath: 'news',
     itemCount: 50,
     itemsPerPage: 0,
@@ -32,7 +29,7 @@ export default function (this: any, moduleOptions: any) {
     displayMode: 1,
     id: undefined,
   }
-  const options = Object.assign(
+  const options: Options = Object.assign(
     {},
     defaultOptions,
     this.options.cision,
