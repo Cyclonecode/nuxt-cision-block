@@ -21,7 +21,7 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
-    "postbuild": "cp -R src/*.vue src/pages src/*.js lib/.",
+    "postbuild": "cp -R src/*.vue src/pages lib/.",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.vue\"",
     "lint": "tslint -p tsconfig.json"
   },
