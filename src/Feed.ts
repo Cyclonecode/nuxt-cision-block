@@ -1,4 +1,6 @@
 import { CisionFeedItem, CisionFeedItemResponse } from './FeedItem'
+import DisplayMode from './DisplayMode'
+import ItemType from './ItemType'
 
 export interface CisionFeedResponse {
   Releases: CisionFeedItemResponse[]
@@ -51,10 +53,10 @@ export interface FeedOptions {
   index?: number
   itemCount?: number
   itemsPerPage?: number
-  itemType?: string[]
+  itemType?: ItemType[]
   startDate?: string
   endDate?: string
-  displayMode?: string
+  displayMode?: DisplayMode
   language?: LanguageCode
   categories?: string[]
   keywords?: string[]

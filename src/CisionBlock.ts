@@ -81,7 +81,6 @@ const CisionBlock: any = {
         if (data) {
           return data
         }
-        const displayMode = parseInt(options.displayMode || '0', 10)
         return this.client
           .get(`NewsFeed/${options.id}`, {
             params: {
@@ -90,9 +89,9 @@ const CisionBlock: any = {
               PageSize: options.itemCount || 50,
               Format: 'json',
               Regulatory:
-                displayMode === DisplayMode.DISPLAY_REGULATORY
+                options.displayMode === DisplayMode.DISPLAY_REGULATORY
                   ? true
-                  : displayMode === DisplayMode.DISPLAY_NON_REGULATORY
+                  : options.displayMode === DisplayMode.DISPLAY_NON_REGULATORY
                   ? false
                   : undefined,
               Tags: options.keywords?.join(','),

@@ -1,5 +1,6 @@
 import path from 'path'
 import Options from './Options'
+import { ItemType, ITEM_TYPE_ALL } from './ItemType';
 
 export default function (this: any, moduleOptions: Options) {
   const defaultOptions: Options = {
@@ -11,7 +12,7 @@ export default function (this: any, moduleOptions: Options) {
     articleShowIntro: true,
     articleShowBody: true,
     articleShowFiles: true,
-    itemType: ['KMK', 'RDV', 'PRM', 'RPT', 'INB', 'NBR'],
+    itemType: ITEM_TYPE_ALL,
     startDate: undefined,
     endDate: undefined,
     useCache: true,
@@ -42,43 +43,23 @@ export default function (this: any, moduleOptions: Options) {
       component: resolve(path.resolve(__dirname, 'pages/Article.vue')),
     })
   })
-  // How to use this for routes above?
-  this.addTemplate({
-    fileName: 'cision-block/pages/Article.vue',
-    src: path.resolve(__dirname, 'pages/Article.vue'),
-  })
-  this.addTemplate({
-    fileName: 'cision-block/Feed.js',
-    src: path.resolve(__dirname, 'Feed.js'),
-  })
-  this.addTemplate({
-    fileName: 'cision-block/FeedItem.js',
-    src: path.resolve(__dirname, 'FeedItem.js'),
-  })
-  this.addTemplate({
-    fileName: 'cision-block/PressFeed.vue',
-    src: path.resolve(__dirname, 'PressFeed.vue'),
-  })
-  this.addTemplate({
-    fileName: 'cision-block/PressReleaseCard.vue',
-    src: path.resolve(__dirname, 'PressReleaseCard.vue'),
-  })
-  // this.addTemplate({
-  //   fileName: 'cision-block/PressFilter.vue',
-  //   src: path.resolve(__dirname, 'PressFilter.vue'),
-  // })
-  // this.addTemplate({
-  //   fileName: 'cision-block/Client.js',
-  //   src: path.resolve(__dirname, 'Client.js'),
-  // })
-  this.addTemplate({
-    fileName: 'cision-block/CisionBlock.js',
-    src: path.resolve(__dirname, 'CisionBlock.js'),
-  })
-  this.addTemplate({
-    fileName: 'cision-block/package.json',
-    src: path.resolve(__dirname, '../package.json'),
-  })
+  const templates = [
+      'pages/Article.vue',
+      'CisionBlock.js',
+      'DisplayMode.js',
+      'Feed.js',
+      'FeedItem.js',
+      'ItemType.js',
+      'Options.js',
+      'PressFeed.vue',
+      'PressReleaseCard.vue',
+  ]
+  for (const template of templates) {
+    this.addTemplate({
+      fileName: path.join('cision-block', template),
+      src: path.resolve(__dirname, template)
+    })
+  }
   this.addPlugin({
     src: path.resolve(__dirname, 'Plugin.js'),
     fileName: 'cision-block/Plugin.js',

@@ -1,4 +1,5 @@
 import DisplayMode from './DisplayMode'
+import ItemType from './ItemType'
 
 export default interface Options {
     showImage: boolean
@@ -14,7 +15,7 @@ export default interface Options {
     // filterNonRegulatoryText: string
     // filterAllText: string
     // imageStyle: string
-    itemType: string[]
+    itemType: ItemType[]
     startDate?: string
     endDate?: string
     useCache: boolean
