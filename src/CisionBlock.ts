@@ -8,6 +8,7 @@ import {
 } from './FeedItem'
 import { CisionFeed, CisionFeedResponse, FeedOptions } from './Feed'
 import PressFeed from './PressFeed.vue'
+const meta = require('./package.json')
 
 const CisionBlock: any = {
   data() {
@@ -21,10 +22,17 @@ const CisionBlock: any = {
     }
     this.installed = true
 
+    // @ts-ignore
     this.client = axios.create({
       baseURL: 'https://publish.ne.cision.com/papi/',
       timeout: args.timeout || 10000,
+      headers: {
+        get: {
+          'User-Agent': 'nuxt-cision-block/' + meta.version,
+        }
+      }
     })
+
     this.cache = new LRUCache({
       maxAge: 60000,
       // max: 1000,

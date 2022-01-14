@@ -81,6 +81,10 @@ export default function (this: any, moduleOptions: any) {
     fileName: 'cision-block/CisionBlock.js',
     src: path.resolve(__dirname, 'CisionBlock.js'),
   })
+  this.addTemplate({
+    fileName: 'cision-block/package.json',
+    src: path.resolve(__dirname, '../package.json'),
+  })
   this.addPlugin({
     src: path.resolve(__dirname, 'Plugin.js'),
     fileName: 'cision-block/Plugin.js',
