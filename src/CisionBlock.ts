@@ -22,15 +22,14 @@ const CisionBlock: any = {
     }
     this.installed = true
 
-    // @ts-ignore
     this.client = axios.create({
       baseURL: 'https://publish.ne.cision.com/papi/',
       timeout: args.timeout || 10000,
-      headers: {
-        get: {
-          'User-Agent': 'nuxt-cision-block/' + meta.version,
-        }
-      }
+      // headers: {
+      //   get: {
+      //     'User-Agent': 'nuxt-cision-block/' + meta.version,
+      //   }
+      // }
     })
 
     this.cache = new LRUCache({
