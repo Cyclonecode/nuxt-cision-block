@@ -38,16 +38,13 @@ export default function (this: any, moduleOptions: any) {
     this.options.cision,
     moduleOptions
   )
-  this.options.router = {
-    ...this.options.router,
-    extendRoutes(routes: any[], resolve: any) {
-      routes.push({
-        name: 'news',
-        path: `/${options.basePath}/:id`,
-        component: resolve(path.resolve(__dirname, 'pages/Article.vue')),
-      })
-    },
-  }
+  this.extendRoutes((routes: any[], resolve: any) => {
+    routes.push({
+      name: 'news',
+      path: `/${options.basePath}/:id`,
+      component: resolve(path.resolve(__dirname, 'pages/Article.vue')),
+    })
+  })
   // How to use this for routes above?
   this.addTemplate({
     fileName: 'cision-block/pages/Article.vue',
