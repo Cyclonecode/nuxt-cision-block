@@ -1,0 +1,13 @@
+node_modules
+docker/node_modules
+src
+tests
+.eslintrc.js
+.gitignore
+.npmrc
+.nvmrc
+.prettierrc.json
+docker-compose.yaml
+jestconfig.json
+README.md
+tsconfig.json

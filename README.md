@@ -74,7 +74,7 @@ non-regulatory releases or a mix of both.
 
 You can try out the module using docker:
 
-    docker-compose up
+    npm run build && docker-compose up
 
 Then visit the sample page at:
 
