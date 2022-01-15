@@ -54,7 +54,8 @@ Add the `PressFeed` component where you would like to use it:
 * `showBody` Display body or not.
 * `mustHaveImage` Remove items missing any image.
 * `useCache` Enable caching.
-* `maxAge` Maximum age in ms.
+* `cacheMax` Maximum number of entries to cache.
+* `cacheMaxAge` Maximum age in ms, can be set till 0 to disable caching.
 * `basePath` The base slug for each news article.
 * `itemCount` Maxium number of items to fetch.
 * `itemsPerPage` The number of items per page.
@@ -68,3 +69,13 @@ non-regulatory releases or a mix of both.
 * `markItems` Display regulatory or non regulatory text for each item.
 * `regulatoryText` The text to display for regulatory items.
 * `nonRegulatoryText` The text to display for non-regulatory items.
+
+## Example
+
+You can try out the module using docker:
+
+    docker-compose up
+
+Then visit the sample page at:
+
+    http://localhost:8080

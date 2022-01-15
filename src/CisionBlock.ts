@@ -34,8 +34,8 @@ const CisionBlock: any = {
     })
 
     this.cache = new LRUCache({
-      max: args.cacheMax || 0, // 1000
-      maxAge: !args.useCache
+      max: args.cacheMax || 1000,
+      maxAge: !args.cacheMaxAge
         ? -1
         : parseInt(args.cacheMaxAge || 1000 * 60 * 15, 10),
     })
