@@ -1,15 +1,15 @@
 <template>
   <div id="wrapper" class="cision-feed-wrapper">
     <PressReleaseCard
-        v-for="(item, index) in items"
-        :key="'press-item-' + index"
-        :show-media="doShowImage"
-        :show-intro="doShowIntro"
-        :show-body="doShowBody"
-        :mark-item="doMarkItem"
-        :regulatory-text="getRegulatoryText"
-        :non-regulatory-text="getNonRegulatoryText"
-        :item="item"
+      v-for="(item, index) in items"
+      :key="'press-item-' + index"
+      :show-media="doShowImage"
+      :show-intro="doShowIntro"
+      :show-body="doShowBody"
+      :mark-item="doMarkItem"
+      :regulatory-text="getRegulatoryText"
+      :non-regulatory-text="getNonRegulatoryText"
+      :item="item"
     />
     <ul v-if="numPages > 1" id="pager" class="cision-feed-pager">
       <li v-for="index in numPages" :key="'page-' + index">
@@ -113,7 +113,10 @@ export default {
   },
   computed: {
     numPages() {
-      const itemsPerPage = typeof this.itemsPerPage !== 'undefined' ? this.itemsPerPage : this.$cision.options.itemsPerPage
+      const itemsPerPage =
+        typeof this.itemsPerPage !== 'undefined'
+          ? this.itemsPerPage
+          : this.$cision.options.itemsPerPage
       if (itemsPerPage > 0) {
         const max = Math.ceil(this.releases.length / itemsPerPage)
         return max || 1
@@ -122,34 +125,49 @@ export default {
       }
     },
     items() {
-      const itemsPerPage = typeof this.itemsPerPage !== 'undefined' ? this.itemsPerPage : this.$cision.options.itemsPerPage
+      const itemsPerPage =
+        typeof this.itemsPerPage !== 'undefined'
+          ? this.itemsPerPage
+          : this.$cision.options.itemsPerPage
       if (itemsPerPage > 0) {
         return this.releases.slice(
-            this.page * itemsPerPage,
-            this.page * itemsPerPage + itemsPerPage
+          this.page * itemsPerPage,
+          this.page * itemsPerPage + itemsPerPage
         )
       } else {
         return this.releases
       }
     },
     doShowImage() {
-      return typeof this.showImage !== 'undefined' ? this.showImage : this.$cision.options.showImage
+      return typeof this.showImage !== 'undefined'
+        ? this.showImage
+        : this.$cision.options.showImage
     },
     doShowIntro() {
-      return typeof this.showIntro !== 'undefined' ? this.showIntro : this.$cision.options.showIntro
+      return typeof this.showIntro !== 'undefined'
+        ? this.showIntro
+        : this.$cision.options.showIntro
     },
     doShowBody() {
-      return typeof this.showBody !== 'undefined' ? this.showBody : this.$cision.options.showBody
+      return typeof this.showBody !== 'undefined'
+        ? this.showBody
+        : this.$cision.options.showBody
     },
     doMarkItem() {
-      return typeof this.markItem !== 'undefined' ? this.markItem : this.$cision.options.markItem
+      return typeof this.markItem !== 'undefined'
+        ? this.markItem
+        : this.$cision.options.markItem
     },
     getRegulatoryText() {
-      return typeof this.regulatoryText !== 'undefined' ? this.regulatoryText : this.$cision.options.regulatoryText
+      return typeof this.regulatoryText !== 'undefined'
+        ? this.regulatoryText
+        : this.$cision.options.regulatoryText
     },
     getNonRegulatoryText() {
-      return typeof this.nonRegulatoryText !== 'undefined' ? this.nonRegulatoryText : this.$cision.options.nonRegulatoryText
-    }
+      return typeof this.nonRegulatoryText !== 'undefined'
+        ? this.nonRegulatoryText
+        : this.$cision.options.nonRegulatoryText
+    },
   },
   watch: {
     /* eslint-disable  @typescript-eslint/no-unused-vars */
@@ -160,19 +178,20 @@ export default {
   methods: {
     async fetchFeed() {
       this.releases = (
-          await this.$cision.fetchFeed({
-            id: this.id,
-            mustHaveImage: this.mustHaveImage || this.$cision.options.mustHaveImage,
-            displayMode: this.displayMode || this.$cision.options.displayMode,
-            itemCount: this.itemCount || this.$cision.options.itemCount,
-            itemType: this.itemType || this.$cision.options.itemType,
-            startDate: this.startDate || this.$cision.options.startDate,
-            endDate: this.endDate || this.$cision.options.endDate,
-            language: this.language || this.$cision.options.language,
-            categories: this.categories || this.$cision.options.categories,
-            keywords: this.keywords || this.$cision.options.keywords,
-            useCache: this.useCache || this.$cision.options.useCache,
-          })
+        await this.$cision.fetchFeed({
+          id: this.id,
+          mustHaveImage:
+            this.mustHaveImage || this.$cision.options.mustHaveImage,
+          displayMode: this.displayMode || this.$cision.options.displayMode,
+          itemCount: this.itemCount || this.$cision.options.itemCount,
+          itemType: this.itemType || this.$cision.options.itemType,
+          startDate: this.startDate || this.$cision.options.startDate,
+          endDate: this.endDate || this.$cision.options.endDate,
+          language: this.language || this.$cision.options.language,
+          categories: this.categories || this.$cision.options.categories,
+          keywords: this.keywords || this.$cision.options.keywords,
+          useCache: this.useCache || this.$cision.options.useCache,
+        })
       )?.items
 
       this.page = this.$route.query.page || 0
