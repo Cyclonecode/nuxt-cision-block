@@ -8,7 +8,7 @@
     <div v-if="showMedia && item.image" class="cision-feed-item-media">
       <img :src="item.image" :alt="item.title" />
     </div>
-    <p class="intro" v-if="showIntro">{{ item.intro }}</p>
+    <p v-if="showIntro" class="intro">{{ item.intro }}</p>
     <p v-if="showBody">{{ item.body }}</p>
     <nuxt-link :to="link">
       {{ linkText }}

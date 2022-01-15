@@ -6,8 +6,8 @@
     <div v-if="showFiles && files.length" class="cision-block-files">
       <a
         v-for="(file, index) in files"
-        :href="file.url"
         :key="'file-' + index"
+        :href="file.url"
         >{{ file.title }}</a
       >
     </div>
@@ -31,6 +31,13 @@ export default {
       release: {},
     }
   },
+  async fetch() {
+    if (this.item) {
+      this.release = this.item
+      return
+    }
+    this.release = await this.$cision.fetch(this.id || this.$route.params.id)
+  },
   computed: {
     files() {
       return this.release.files || []
@@ -47,13 +54,6 @@ export default {
     showFiles() {
       return this.$cision.options.articleShowFiles
     },
-  },
-  async fetch() {
-    if (this.item) {
-      this.release = this.item
-      return
-    }
-    this.release = await this.$cision.fetch(this.id || this.$route.params.id)
   },
 }
 </script>

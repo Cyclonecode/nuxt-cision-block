@@ -108,6 +108,9 @@ export default {
       page: 0,
     }
   },
+  async fetch() {
+    await this.fetchFeed()
+  },
   computed: {
     numPages() {
       if (this.itemsPerPage > 0) {
@@ -129,12 +132,10 @@ export default {
     },
   },
   watch: {
+    /* eslint-disable  @typescript-eslint/no-unused-vars */
     $route(to, from) {
       this.fetchFeed()
     },
-  },
-  async fetch() {
-    await this.fetchFeed()
   },
   methods: {
     async fetchFeed() {
