@@ -11,11 +11,7 @@
       :non-regulatory-text="nonRegulatoryText"
       :item="item"
     />
-    <ul
-        v-if="numPages > 1"
-        id="pager"
-        class="cision-feed-pager"
-    >
+    <ul v-if="numPages > 1" id="pager" class="cision-feed-pager">
       <li v-for="index in numPages" :key="'page-' + index">
         <nuxt-link :to="{ query: { page: index - 1 } }">
           {{ index }}

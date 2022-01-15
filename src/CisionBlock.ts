@@ -1,6 +1,6 @@
-const axios = require('axios')
-const LRUCache = require('lru-cache')
-const md5 = require('md5')
+import axios from 'axios'
+import LRUCache from 'lru-cache'
+import md5 from 'md5'
 import {
   CisionFeedItem,
   CisionFeedItemResponse,
@@ -35,7 +35,9 @@ const CisionBlock: any = {
 
     this.cache = new LRUCache({
       max: args.cacheMax || 0, // 1000
-      maxAge: !args.useCache ? -1 : parseInt(args.cacheMaxAge || (1000 * 60 * 15), 10),
+      maxAge: !args.useCache
+        ? -1
+        : parseInt(args.cacheMaxAge || 1000 * 60 * 15, 10),
     })
 
     Vue.component(args.componentName || 'PressFeed', PressFeed)
@@ -105,7 +107,9 @@ const CisionBlock: any = {
             if (options.itemType?.length) {
               response.data.Releases = response.data.Releases.filter(
                 (it: CisionFeedItemResponse) =>
-                  (options.itemType || []).map(it => it.toUpperCase()).includes(it.InformationType.toUpperCase())
+                  (options.itemType || [])
+                    .map((it) => it.toUpperCase())
+                    .includes(it.InformationType.toUpperCase())
               )
             }
             // Filter on language code
@@ -129,7 +133,8 @@ const CisionBlock: any = {
                   for (const catName of options.categories || []) {
                     if (
                       it.Categories.find(
-                        (category) => category.Name.toLowerCase() === catName.toLowerCase()
+                        (category) =>
+                          category.Name.toLowerCase() === catName.toLowerCase()
                       )
                     ) {
                       return true

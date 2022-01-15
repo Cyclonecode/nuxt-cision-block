@@ -1,18 +1,9 @@
 <template>
   <div v-if="release">
     <h1>{{ release.title }}</h1>
-    <div
-        v-if="showIntro"
-        v-html="release.htmlIntro"
-    />
-    <div
-        v-if="showBody"
-        v-html="release.htmlBody"
-    />
-    <div
-        v-if="showFiles && files.length"
-        class="cision-block-files"
-    >
+    <div v-if="showIntro" v-html="release.htmlIntro" />
+    <div v-if="showBody" v-html="release.htmlBody" />
+    <div v-if="showFiles && files.length" class="cision-block-files">
       <a
         v-for="(file, index) in files"
         :href="file.url"
@@ -55,7 +46,7 @@ export default {
     },
     showFiles() {
       return this.$cision.options.articleShowFiles
-    }
+    },
   },
   async fetch() {
     if (this.item) {

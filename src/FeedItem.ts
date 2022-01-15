@@ -31,27 +31,27 @@ export interface CisionQuoteResponse {
   Text: string
 }
 export interface CisionLanguageVersionResponse {
-  Code: string;
-  ReleaseId: string;
+  Code: string
+  ReleaseId: string
 }
 export interface CisionServiceCategoryResponse {
-  ServiceName: string;
-  Name: string;
-  Value: string;
+  ServiceName: string
+  Name: string
+  Value: string
 }
 export interface CisionTickerResponse {
-  Symbol: string;
-  ISIN: string;
-  PrimaryListing: boolean;
-  IsShare: boolean;
-  MarketPlaceSymbol: string;
-  MarketPlaceName: string;
-  MarketPlaceIsRegulated: boolean;
-  MarketPlaceCountryCode: CountryCode;
+  Symbol: string
+  ISIN: string
+  PrimaryListing: boolean
+  IsShare: boolean
+  MarketPlaceSymbol: string
+  MarketPlaceName: string
+  MarketPlaceIsRegulated: boolean
+  MarketPlaceCountryCode: CountryCode
 }
 export interface CisionExternalLinkResponse {
-  Title: string;
-  Url: string;
+  Title: string
+  Url: string
 }
 export interface CisionFeedItemResponse {
   SyndicatedUrl: string
@@ -109,12 +109,12 @@ export class CisionFeedItem {
   htmlIntro: string
   image: string
   files: {
-    url: string,
-    fileName: string,
-    title: string,
-    description: string,
-    isMain: boolean,
-    type: string,
+    url: string
+    fileName: string
+    title: string
+    description: string
+    isMain: boolean
+    type: string
   }[]
   date: string
   categories: string[]
@@ -142,10 +142,10 @@ export class CisionFeedItem {
       type: it.MediaType,
     }))
     this.date = new Date(rawItem.PublishDate).toDateString()
-    this.categories = (rawItem.Categories || []).map((it: CisionCategoryResponse) =>
-      it.Name.toLowerCase()
+    this.categories = (rawItem.Categories || []).map(
+      (it: CisionCategoryResponse) => it.Name.toLowerCase()
     )
-    this.keywords = (rawItem.Keywords || []).map(it => it.toLowerCase())
+    this.keywords = (rawItem.Keywords || []).map((it) => it.toLowerCase())
     this.languageCode = rawItem.LanguageCode.toLowerCase()
     this.countryCode = rawItem.CountryCode.toLowerCase()
     this.type = rawItem.InformationType.toUpperCase()

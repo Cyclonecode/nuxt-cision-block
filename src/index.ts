@@ -1,6 +1,6 @@
 import path from 'path'
 import Options from './Options'
-import { ItemType, ITEM_TYPE_ALL } from './ItemType';
+import { ITEM_TYPE_ALL } from './ItemType'
 
 export default function (this: any, moduleOptions: Options) {
   const defaultOptions: Options = {
@@ -44,20 +44,20 @@ export default function (this: any, moduleOptions: Options) {
     })
   })
   const templates = [
-      'pages/Article.vue',
-      'CisionBlock.js',
-      'DisplayMode.js',
-      'Feed.js',
-      'FeedItem.js',
-      'ItemType.js',
-      'Options.js',
-      'PressFeed.vue',
-      'PressReleaseCard.vue',
+    'pages/Article.vue',
+    'CisionBlock.js',
+    'DisplayMode.js',
+    'Feed.js',
+    'FeedItem.js',
+    'ItemType.js',
+    'Options.js',
+    'PressFeed.vue',
+    'PressReleaseCard.vue',
   ]
   for (const template of templates) {
     this.addTemplate({
       fileName: path.join('cision-block', template),
-      src: path.resolve(__dirname, template)
+      src: path.resolve(__dirname, template),
     })
   }
   this.addPlugin({
