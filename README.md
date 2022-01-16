@@ -52,11 +52,15 @@ Add the `PressFeed` component where you would like to use it:
 * `showImage` Display images or not.
 * `showIntro` Display excerpt or not.
 * `showBody` Display body or not.
+* `articleShowImage` Display image in article.
+* `articleShowIntro` Display excerpt in article.
+* `articleShowBody` Display body in article.
+* `articleShowFiles` Display list of files in article.
 * `mustHaveImage` Remove items missing any image.
 * `useCache` Enable caching.
-* `cacheMax` Maximum number of entries to cache.
-* `cacheMaxAge` Maximum age in ms, can be set till 0 to disable caching.
-* `basePath` The base slug for each news article.
+* `cacheMax*` Maximum number of entries to cache.
+* `cacheMaxAge*` Maximum age in ms, can be set till 0 to disable caching.
+* `basePath*` The base slug for each news article.
 * `itemCount` Maxium number of items to fetch.
 * `itemsPerPage` The number of items per page.
 * `displayMode` Whether we would like to display only regulatory releases,
@@ -70,6 +74,9 @@ non-regulatory releases or a mix of both.
 * `regulatoryText` The text to display for regulatory items.
 * `nonRegulatoryText` The text to display for non-regulatory items.
 
+`*` The setting can only be used during build time, e.g it can only be set as an option in `nuxt.config.js`
+for the module.
+
 ## Example
 
 You can try out the module using docker:
@@ -79,3 +86,5 @@ You can try out the module using docker:
 Then visit the sample page at:
 
     http://localhost:8080
+
+Check `docker-compose.yaml` for environment variables that you may override by using a `.env` file.
