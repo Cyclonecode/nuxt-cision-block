@@ -4,9 +4,7 @@ This module can be used to fetch and display press releases from Cision.
 
 ## Installation:
 
-```javascript
-npm install nuxt-cision-block --save
-```
+    npm install nuxt-cision-block --save
 
 ## Usage:
 
