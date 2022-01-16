@@ -1,18 +1,16 @@
 {
-  "name": "nuxt-cision",
+  "name": "nuxt-cision-block",
   "version": "1.0.0",
   "description": "Cision Block module for nuxt",
-  "engines": {
-    "node": ">=16.13"
-  },
-  "main": "lib/index",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "README.md"
+    "lib/*.d.ts"
   ],
-  "typings": [
-    "lib/index"
-  ],
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "npm run clean && tsc",
