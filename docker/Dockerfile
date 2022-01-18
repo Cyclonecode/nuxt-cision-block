@@ -5,7 +5,7 @@ COPY ./docker .
 RUN npm i --only=production
 RUN mkdir ./node_modules/nuxt-cision-block
 COPY ./lib ./node_modules/nuxt-cision-block/lib
-COPY ./package*.json ./node_modules/nuxt-cision-block/.
+COPY ./package*.json ./node_modules/nuxt-cision-block/
 RUN npm run build
 
 ARG PORT
