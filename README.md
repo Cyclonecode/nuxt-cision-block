@@ -2,6 +2,10 @@
 
 This module can be used to fetch and display press releases from Cision.
 
+## Demo
+
+A small demo can be found here: http://cyclonecode.tk:3030/
+
 ## Installation:
 
     npm install nuxt-cision-block --save
