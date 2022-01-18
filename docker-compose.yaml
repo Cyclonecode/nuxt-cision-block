@@ -60,4 +60,4 @@ services:
       - NON_REGULATORY_TEXT=$NON_REGULATORY_TEXT
     restart: always
     ports:
-      - $PORT:$PORT
+      - ${PORT}:${PORT}
