@@ -161,6 +161,14 @@ export class CisionFeedItem {
     }
     return false
   }
+  hasKeyword(keywords: string[]): boolean {
+    for (const keyword of keywords) {
+      if (this.keywords.includes(keyword.toLowerCase())) {
+        return true
+      }
+    }
+    return false
+  }
   toJSON() {
     return { ...this }
   }
